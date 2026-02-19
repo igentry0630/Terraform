@@ -17,3 +17,6 @@ override.tf.json
 
 # --- Local Environment ---
 .env
+nohup.out        # Added: Ignore background process logs
+*.log            # Added: Ignore other general log files
+
