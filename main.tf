@@ -10,11 +10,16 @@ resource "aws_launch_template" "example" {
   vpc_security_group_ids = [aws_security_group.instance.id]
 
   user_data = base64encode(<<-EOF
-              #!/bin/bash
-              echo "Hello, World" > index.html
-              nohup busybox httpd -f -p 8080 &
-              EOF
+    #!/bin/bash
+    sudo apt-get update -y
+    sudo apt-get install -y busybox
+    echo "Hello, World" > index.html
+    sudo nohup busybox httpd -f -p 80 &
+  EOF
   )
+
+
+
 }
 
 
@@ -33,8 +38,8 @@ resource "aws_security_group" "instance" {
   name = "terraform-example-instance"
 
   ingress {
-    from_port = 8080
-    to_port   = 8080
+    from_port = 80
+    to_port   = 80
     protocol  = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
